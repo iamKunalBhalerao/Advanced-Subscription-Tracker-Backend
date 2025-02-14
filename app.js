@@ -8,5 +8,8 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3000, () => {
-  console.log("server is on PORT:3000");
+  console.log("Subscription Tracker API is running on http://localhost:3000");
 });
+
+export default app;
+ 
