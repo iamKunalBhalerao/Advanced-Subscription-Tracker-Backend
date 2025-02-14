@@ -26,8 +26,12 @@ subscriptionRouter.get("/user/:id", (req, res) =>
   res.send({ title: "GET All user Subscriptions" })
 );
 
-subscriptionRouter.put("/:id/cancle", (req, res) =>
-  res.send({ title: "CANCLE user Subscriptions" })
+subscriptionRouter.put("/:id/calcel", (req, res) =>
+  res.send({ title: "CANCEL user Subscriptions" })
+);
+
+subscriptionRouter.get("/upcoming-renewals", (req, res) =>
+  res.send({ title: "GET upcoming renewals" })
 );
 
 export default subscriptionRouter;
