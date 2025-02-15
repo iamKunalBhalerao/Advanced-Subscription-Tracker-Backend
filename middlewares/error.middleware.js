@@ -2,7 +2,7 @@ const errorMiddleware = (err, req, res, next) => {
   try {
     let error = { ...err };
 
-    error.essage = err.message;
+    error.message = err.message;
 
     console.error(err);
 
@@ -32,7 +32,7 @@ const errorMiddleware = (err, req, res, next) => {
 
     res.status(error.statusCode || 500).json({
       success: false,
-      error: error.message || "Server Error",
+      Error: error.message || "Server Error",
     });
   } catch (error) {
     next(error);
