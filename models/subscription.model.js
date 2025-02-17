@@ -55,6 +55,7 @@ const subscriptionSchema = new Schema(
     },
 
     status: {
+      type: String,
       enum: ["active", "cancelled", "expired"],
       default: "active",
     },
@@ -62,19 +63,20 @@ const subscriptionSchema = new Schema(
     startDate: {
       type: Date,
       required: true,
-      validate: (value) => {
-        return value <= new Date();
+      validate: {
+        validator: (value) => value <= new Date(),
+        message: "Start date must be in the past",
       },
-      message: "Start Date must be in the past",
     },
 
     renewalDate: {
       type: Date,
-      required: true,
-      validate: (value) => {
-        return value > this.startDate;
+      validate: {
+        validator: function (value) {
+          return value > this.startDate;
+        },
+        message: "Renewal date must be after the start date",
       },
-      message: "Renewal Date must be after the start date",
     },
 
     user: {
@@ -88,7 +90,7 @@ const subscriptionSchema = new Schema(
 );
 
 // Auto-Calculet the renewal Data if missing
-subscriptionSchema.pre("save", (next) => {
+subscriptionSchema.pre("save", function (next) {
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -112,6 +114,6 @@ subscriptionSchema.pre("save", (next) => {
   next();
 });
 
-const SubscriptionModel = model("Subscription", subscriptionSchema);
+const subscriptionModel = model("Subscription", subscriptionSchema);
 
-export default SubscriptionModel;
+export default subscriptionModel;
